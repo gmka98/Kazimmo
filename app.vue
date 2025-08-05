@@ -4,43 +4,50 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
 </Head>
-  <div>
+  <body>
     <header>
-      <nav>
-        <div class="logo">KAZIMMO</div>
-        <ul class="nav-links">
-          <li><a href="#services">Services</a></li>
-          <li><a href="#tarifs">Tarifs</a></li>
-          <li><a href="#avantages">Avantages</a></li>
-          <li><a href="#" class="cta-button-nav">Contact</a></li>
-        </ul>
-        <div class="burger">
-          <div class="line1"></div>
-          <div class="line2"></div>
-          <div class="line3"></div>
-        </div>
-      </nav>
+        <nav>
+            <div class="logo">KAZIMMO</div>
+            <ul class="nav-links">
+                <li><a href="#services">Services</a></li>
+                <li><a href="#tarifs">Tarifs</a></li>
+                <li><a href="#avantages">Avantages</a></li>
+                <li><a href="#" class="cta-button-nav">Contact</a></li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
     </header>
 
     <main>
-      <section class="hero">
-        <div class="swiper-container hero-slider">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide" style="background-image: url('/hero-image.png');"></div>
-            <div class="swiper-slide" style="background-image: url('/hero-image-2.png');"></div>
-            <div class="swiper-slide" style="background-image: url('/hero-image-3.png');"></div>
-          </div>
-          <div class="swiper-pagination"></div>
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
-        </div>
-        <div class="hero-content">
-          <h1>CONNEXION PROPRIÉTAIRE | LOCATAIRE</h1>
-          <p>La gestion locative simple, transparente et efficace pour optimiser votre investissement.</p>
-          <a href="#services" class="cta-button">Découvrir nos services</a>
-        </div>
-      </section>
-       <section id="problemes" class="content-section animate-on-scroll">
+        <section class="hero">
+            <!-- Slider main container -->
+            <div class="swiper-container hero-slider">
+                <!-- Additional required wrapper -->
+                <div class="swiper-wrapper">
+                    <!-- Slides -->
+                    <div class="swiper-slide" style="background-image: url('hero-image.png');"></div>
+                    <div class="swiper-slide" style="background-image: url('hero-image-2.png');"></div>
+                    <div class="swiper-slide" style="background-image: url('hero-image-3.png');"></div>
+                </div>
+                <!-- If we need pagination -->
+                <div class="swiper-pagination"></div>
+
+                <!-- If we need navigation buttons -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+            <div class="hero-content">
+                <h1>CONNEXION PROPRIÉTAIRE | LOCATAIRE</h1>
+                <p>La gestion locative simple, transparente et efficace pour optimiser votre investissement.</p>
+                <a href="#services" class="cta-button">Découvrir nos services</a>
+            </div>
+        </section>
+
+        <section id="problemes" class="content-section animate-on-scroll">
             <h2 class="section-title">La gestion locative traditionnelle est un casse-tête</h2>
             <p class="section-subtitle">Vous perdez du temps, de l'énergie et de l'argent.</p>
             <div class="grid">
@@ -294,12 +301,20 @@
                 </div>
              </div>
         </section>
-
     </main>
-  </div>
+
+    <footer>
+        <p>&copy; 2024 KAZIMMO. Tous droits réservés.</p>
+        <p><a href="#">Mentions légales</a> | <a href="#">Politique de confidentialité</a></p>
+    </footer>
+
+</body>
 </template>
 <script setup>
-
+import AnimateOnScroll from './components/AnimateOnScroll.vue'
+import Hero from './components/Hero.vue'
+import Navbar from './components/Navbar.vue'
+import Counter from './components/Counter.vue'
 onMounted(() => {
   const script = document.createElement("script")
   script.src = "https://unpkg.com/swiper/swiper-bundle.min.js"
@@ -612,9 +627,74 @@ nav {
     color: var(--white);
 }
 
+/* --- Featured Properties Section --- */
+.properties-grid {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.property-card {
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.property-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.property-card-image {
+    position: relative;
+    height: 220px;
+}
+
+.property-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.property-card-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    color: var(--white);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.new-badge {
+    background-color: var(--blue);
+}
+
+.rented-badge {
+    background-color: #38a169; /* a green color */
+}
+
+.property-card-content {
+    padding: 1.5rem;
+}
+
+.property-card-content h3 {
+    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+}
+
+.property-details {
+    font-weight: 600;
+    color: var(--blue);
+    margin-bottom: 1rem;
+}
+
 /* --- Testimonials Section --- */
 #temoignages {
-    background-color: var(--white);
+    background-color: var(--light-gray);
 }
 
 .testimonials-grid {
@@ -630,6 +710,10 @@ nav {
     flex-direction: column;
     align-items: center;
     text-align: center;
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
 .client-photo {
@@ -645,6 +729,20 @@ nav {
 .client-photo:hover {
     transform: scale(1.05);
     box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.testimonial-stars {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: #f6ad55; /* a nice orange/gold color for stars */
+}
+
+.testimonial-stars .star.half::before {
+    content: '★';
+    position: absolute;
+    color: #d69e2e;
+    width: 50%;
+    overflow: hidden;
 }
 
 .testimonial-card blockquote {
@@ -679,6 +777,107 @@ nav {
     font-size: 1.1rem;
     color: var(--navy);
     font-weight: 500;
+}
+
+/* --- Calculator Section --- */
+.calculator-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    max-width: 1000px;
+    margin: 0 auto;
+    gap: 3rem;
+    background: var(--white);
+    padding: 3rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.07);
+}
+
+.calculator-form h3, .calculator-results h3 {
+    font-size: 1.5rem;
+    color: var(--navy);
+    margin-bottom: 2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--light-gray);
+}
+
+.input-group {
+    margin-bottom: 1.5rem;
+}
+
+.input-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: var(--header-font);
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--blue);
+    box-shadow: 0 0 0 2px rgba(49, 130, 206, 0.2);
+}
+
+#calculate-btn {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+    margin-top: 1rem;
+}
+
+.calculator-results {
+    background-color: var(--navy);
+    color: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.calculator-results h3 {
+    color: var(--white);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.result-item:last-of-type {
+    border-bottom: none;
+}
+
+.result-label {
+    font-size: 1.1rem;
+}
+
+.result-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--white);
+}
+
+.result-disclaimer {
+    margin-top: auto;
+    font-size: 0.8rem;
+    color: #a0aec0;
+    text-align: center;
+    padding-top: 1rem;
+}
+
+.result-disclaimer a {
+    color: var(--white);
+    font-weight: 600;
 }
 
 /* --- Pricing Table --- */
@@ -838,12 +1037,15 @@ footer a:hover {
     .content-section {
         padding: 3rem 1rem;
     }
+    
+    .calculator-container {
+        grid-template-columns: 1fr;
+        padding: 2rem 1.5rem;
+        gap: 2rem;
+    }
 
     .pricing-col.featured {
         transform: scale(1);
     }
 }
 </style>
-
-
-

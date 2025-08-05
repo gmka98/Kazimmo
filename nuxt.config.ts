@@ -1,15 +1,23 @@
 // nuxt.config.ts
 export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
- postcss: {
+
+  postcss: {
     plugins: {
       tailwindcss: {},
       autoprefixer: {},
     },
   },
+
   css: [
-    "@/assets/style.css",'@/assets/css/main.css',
+    "@/assets/style.css",
+    '@/assets/css/main.css',
   ],
+
+  plugins: [
+    '~/plugins/smoothScroll.client.ts' // ✅ plugin déclaré correctement ici
+  ],
+
   modules: [
     ['@nuxtjs/google-fonts', {
       families: {
@@ -17,6 +25,7 @@ export default defineNuxtConfig({
       }
     }]
   ],
+
   app: {
     head: {
       link: [

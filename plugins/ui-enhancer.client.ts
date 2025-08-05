@@ -5,10 +5,12 @@ import 'swiper/css/bundle'
 export default defineNuxtPlugin(() => {
   if (process.server) return
 
+  if (typeof window === 'undefined') return
+
   window.addEventListener('DOMContentLoaded', () => {
     // Menu burger
-    const burger = document.querySelector('.burger')
-    const nav = document.querySelector('.nav-links')
+    const burger = document.querySelector('.burger') as HTMLElement | null
+    const nav = document.querySelector('.nav-links') as HTMLElement | null
     const navLinks = document.querySelectorAll('.nav-links li')
 
     if (burger && nav) {
@@ -16,7 +18,8 @@ export default defineNuxtPlugin(() => {
         nav.classList.toggle('nav-active')
 
         navLinks.forEach((link, index) => {
-          link.style.animation = link.style.animation
+          const el = link as HTMLElement
+          el.style.animation = el.style.animation
             ? ''
             : `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`
         })
@@ -25,7 +28,7 @@ export default defineNuxtPlugin(() => {
       })
     }
 
-    // Inject keyframes
+    // Inject keyframes for menu animation
     const style = document.createElement('style')
     style.innerHTML = `
       @keyframes navLinkFade {
@@ -41,7 +44,7 @@ export default defineNuxtPlugin(() => {
     `
     document.head.appendChild(style)
 
-    // Swiper slider
+    // Initialize Swiper slider
     new Swiper('.hero-slider', {
       loop: true,
       effect: 'fade',
@@ -59,7 +62,7 @@ export default defineNuxtPlugin(() => {
       }
     })
 
-    // Scroll-triggered animation
+    // Scroll-triggered animations
     const scrollObserver = new IntersectionObserver(
       (entries, observer) => {
         entries.forEach(entry => {
@@ -84,20 +87,22 @@ export default defineNuxtPlugin(() => {
       (entries, observer) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            const counter = entry.target
-            const animate = () => {
-              const target = +counter.getAttribute('data-target')!
-              const count = +counter.textContent!
-              const inc = Math.ceil(target / speed)
+            const counter = entry.target as HTMLElement
+            const target = +counter.getAttribute('data-target')!
+            let count = +counter.textContent!
 
+            const updateCounter = () => {
+              const increment = Math.ceil(target / speed)
               if (count < target) {
-                counter.textContent = `${Math.min(count + inc, target)}`
-                setTimeout(animate, 10)
+                count = Math.min(count + increment, target)
+                counter.textContent = `${count}`
+                setTimeout(updateCounter, 10)
               } else {
                 counter.textContent = `${target}`
               }
             }
-            animate()
+
+            updateCounter()
             observer.unobserve(counter)
           }
         })
@@ -109,14 +114,15 @@ export default defineNuxtPlugin(() => {
       counterObserver.observe(counter)
     })
 
-    // Smooth scroll
+    // Smooth scroll for internal links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
-        const href = this.getAttribute('href')!
-        if (href.length > 1 && document.querySelector(href)) {
+        const href = (this as HTMLAnchorElement).getAttribute('href')
+        if (href && href.length > 1 && document.querySelector(href)) {
           e.preventDefault()
           document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
 
+          // Close mobile menu if open
           if (nav?.classList.contains('nav-active')) {
             nav.classList.remove('nav-active')
             burger?.classList.remove('toggle')
